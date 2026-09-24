@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
+from services.code_runner import run_python_code
 
 from agents.supervisor import debug_code
 
@@ -40,4 +41,13 @@ def debug(request: DebugRequest):
         request.problem
     )
 
+    return result
+
+class RunRequest(BaseModel):
+    code: str
+
+
+@app.post("/run")
+def run_code(request: RunRequest):
+    result = run_python_code(request.code)
     return result
