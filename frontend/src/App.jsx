@@ -9,6 +9,7 @@ const DEFAULT_CODE = `def divide(a, b):
 print(divide(10, 0))`;
 
 const DEFAULT_PROBLEM = "The program gives an error when I run it.";
+const API_URL = import.meta.env.VITE_API_URL;
 
 function App() {
   const [code, setCode] = useState(DEFAULT_CODE);
@@ -25,13 +26,10 @@ function App() {
     setActiveTab("analysis");
 
     try {
-      const response = await axios.post(
-        "http://127.0.0.1:8000/debug",
-        {
-          code,
-          problem
-        }
-      );
+      axios.post(`${API_URL}/debug`, {
+    code,
+    problem
+   });
 
       setResult(response.data);
     } catch (error) {
