@@ -1,6 +1,7 @@
 import subprocess
 import tempfile
 import os
+import sys
 
 
 def run_python_code(code: str):
@@ -11,14 +12,15 @@ def run_python_code(code: str):
         with tempfile.NamedTemporaryFile(
             mode="w",
             suffix=".py",
-            delete=False
+            delete=False,
+            encoding="utf-8"
         ) as file:
 
             file.write(code)
             file_path = file.name
 
         result = subprocess.run(
-            ["python", file_path],
+            [sys.executable, file_path],
             capture_output=True,
             text=True,
             timeout=5

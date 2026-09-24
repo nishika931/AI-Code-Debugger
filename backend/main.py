@@ -26,6 +26,10 @@ class DebugRequest(BaseModel):
     problem: str
 
 
+class RunRequest(BaseModel):
+    code: str
+
+
 @app.get("/")
 def root():
     return {
@@ -43,11 +47,10 @@ def debug(request: DebugRequest):
 
     return result
 
-class RunRequest(BaseModel):
-    code: str
-
 
 @app.post("/run")
 def run_code(request: RunRequest):
+
     result = run_python_code(request.code)
+
     return result
