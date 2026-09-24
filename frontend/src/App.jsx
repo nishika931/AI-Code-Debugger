@@ -17,6 +17,28 @@ function App() {
   const [result, setResult] = useState(null);
   const [loading, setLoading] = useState(false);
   const [activeTab, setActiveTab] = useState("analysis");
+  const runCode = async () => {
+  if (!code.trim()) return;
+
+  try {
+    const response = await axios.post(
+      `${API_URL}/run`,
+      {
+        code
+      }
+    );
+
+    setResult({
+      verification: response.data
+    });
+
+    setActiveTab("console");
+
+  } catch (error) {
+    console.error(error);
+    alert("Code execution failed.");
+  }
+};
 
   const debugCode = async () => {
     if (!code.trim()) return;
@@ -98,17 +120,25 @@ function App() {
               <span>main.py</span>
             </div>
 
-            <div className="editor-actions">
+ <div className="editor-actions">
 
-              <button
-                className="debug-button"
-                onClick={debugCode}
-                disabled={loading}
-              >
-                {loading ? "⟳ Debugging..." : "🐛 Debug"}
-              </button>
+  <button
+    className="run-button"
+    onClick={runCode}
+    disabled={loading}
+  >
+    ▶ Run Code
+  </button>
 
-            </div>
+  <button 
+    className="debug-button" 
+    onClick={debugCode} 
+    disabled={loading} 
+  > 
+    {loading ? "⟳ Debugging..." : "🐛 Debug"} 
+  </button> 
+
+</div>
 
           </div>
 
