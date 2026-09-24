@@ -26,10 +26,10 @@ function App() {
     setActiveTab("analysis");
 
     try {
-      axios.post(`${API_URL}/debug`, {
-    code,
-    problem
-   });
+      const response = await axios.post(`${API_URL}/debug`, {
+        code,
+        problem,
+      });
 
       setResult(response.data);
     } catch (error) {
@@ -39,7 +39,6 @@ function App() {
       setLoading(false);
     }
   };
-
 
   const resetCode = () => {
     setCode(DEFAULT_CODE);
@@ -86,7 +85,6 @@ function App() {
 
       </header>
 
-
       {/* MAIN WORKSPACE */}
       <main className="workspace">
 
@@ -114,7 +112,6 @@ function App() {
 
           </div>
 
-
           <div className="editor-container">
 
             <Editor
@@ -126,22 +123,21 @@ function App() {
               options={{
                 fontSize: 15,
                 minimap: {
-                  enabled: false
+                  enabled: false,
                 },
                 automaticLayout: true,
                 lineNumbers: "on",
                 scrollBeyondLastLine: false,
                 padding: {
-                  top: 18
+                  top: 18,
                 },
                 smoothScrolling: true,
                 cursorBlinking: "smooth",
-                roundedSelection: false
+                roundedSelection: false,
               }}
             />
 
           </div>
-
 
           {/* PROBLEM INPUT */}
           <div className="problem-section">
@@ -160,7 +156,6 @@ function App() {
           </div>
 
         </section>
-
 
         {/* RIGHT AI PANEL */}
         <section className="ai-panel">
@@ -183,7 +178,6 @@ function App() {
 
           </div>
 
-
           {/* LOADING */}
           {loading && (
 
@@ -197,7 +191,6 @@ function App() {
                 Multiple agents are analyzing and
                 testing your code.
               </p>
-
 
               <div className="workflow-loading">
 
@@ -232,7 +225,6 @@ function App() {
 
           )}
 
-
           {/* EMPTY STATE */}
           {!loading && !result && (
 
@@ -251,18 +243,15 @@ function App() {
               </p>
 
               <div className="feature-list">
-
                 <div>✓ Detect bugs</div>
                 <div>✓ Explain root cause</div>
                 <div>✓ Generate fixes</div>
                 <div>✓ Verify execution</div>
-
               </div>
 
             </div>
 
           )}
-
 
           {/* RESULTS */}
           {!loading && result && (
@@ -297,7 +286,6 @@ function App() {
                 </div>
 
               </div>
-
 
               {/* BUG SUMMARY */}
               <div className="card">
@@ -334,7 +322,6 @@ function App() {
 
               </div>
 
-
               {/* ROOT CAUSE */}
               <div className="card">
 
@@ -348,7 +335,6 @@ function App() {
                 </p>
 
               </div>
-
 
               {/* TABS */}
               <div className="result-tabs">
@@ -399,7 +385,6 @@ function App() {
 
               </div>
 
-
               {/* ANALYSIS TAB */}
               {activeTab === "analysis" && (
 
@@ -427,7 +412,6 @@ function App() {
 
               )}
 
-
               {/* FIXED CODE */}
               {activeTab === "fixed" && (
 
@@ -453,16 +437,15 @@ function App() {
                     options={{
                       readOnly: true,
                       minimap: {
-                        enabled: false
+                        enabled: false,
                       },
-                      fontSize: 13
+                      fontSize: 13,
                     }}
                   />
 
                 </div>
 
               )}
-
 
               {/* DIFF */}
               {activeTab === "diff" && (
@@ -479,16 +462,15 @@ function App() {
                       readOnly: true,
                       renderSideBySide: true,
                       minimap: {
-                        enabled: false
+                        enabled: false,
                       },
-                      fontSize: 13
+                      fontSize: 13,
                     }}
                   />
 
                 </div>
 
               )}
-
 
               {/* CONSOLE */}
               {activeTab === "console" && (
@@ -501,34 +483,27 @@ function App() {
                   </div>
 
                   {result.verification?.output && (
-
                     <pre>
                       {result.verification.output}
                     </pre>
-
                   )}
 
                   {result.verification?.error && (
-
                     <pre className="console-error">
                       {result.verification.error}
                     </pre>
-
                   )}
 
                   {!result.verification?.output &&
                     !result.verification?.error && (
-
                       <span className="muted">
                         No console output.
                       </span>
-
-                  )}
+                    )}
 
                 </div>
 
               )}
-
 
               {/* AGENT WORKFLOW */}
               <div className="card workflow-card">
@@ -583,7 +558,6 @@ function App() {
 
       </main>
 
-
       {/* BOTTOM STATUS BAR */}
       <footer className="statusbar">
 
@@ -606,14 +580,13 @@ function App() {
   );
 }
 
-
 /* SMALL COMPONENTS */
 
 function WorkflowItem({
   icon,
   title,
   text,
-  active
+  active,
 }) {
   return (
     <div
@@ -634,11 +607,10 @@ function WorkflowItem({
   );
 }
 
-
 function InfoItem({
   label,
   value,
-  badge
+  badge,
 }) {
   return (
     <div className="info-item">
@@ -657,5 +629,5 @@ function InfoItem({
   );
 }
 
+export default App;
 
-export default App;c
